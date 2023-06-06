@@ -1,6 +1,12 @@
 <script setup>
 import { ref } from "vue";
 
+const toggle = ref(false);
+
+const togglePrice = () => {
+  toggle.value = !toggle.value;
+};
+
 const pricing = ref([
   {
     header: "Basic",
@@ -41,14 +47,18 @@ const pricing = ref([
       >
         <span>Annualy</span>
 
-        <input type="checkbox" id="switch" />
+        <input @click="togglePrice" type="checkbox" id="switch" />
         <label for="switch">Toggle</label>
         <span>Monthly</span>
       </div>
       <div v-for="price in pricing" class="box pricing-card">
         <h2>{{ price.header }}</h2>
-        <h3 class="is-size-1">
+        <h3 v-if="toggle" class="is-size-1">
           <span class="is-size-2">&dollar;</span> {{ price.price }}
+        </h3>
+        <h3 v-if="!toggle" class="is-size-1">
+          <span class="is-size-2">&dollar;</span>
+          {{ (price.price * 10 + 0.09).toFixed(2) }}
         </h3>
 
         <hr />
