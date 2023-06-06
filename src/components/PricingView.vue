@@ -1,31 +1,66 @@
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+
+const pricing = ref([
+  {
+    header: "Basic",
+    price: 19.99,
+    description: {
+      storage: "500 GB Storage",
+      user: "2 Users Allowed",
+      sendUpTo: "Send up to 3 GB",
+    },
+  },
+  {
+    header: "Professional",
+    price: 24.99,
+    description: {
+      storage: "1 TB Storage",
+      user: "5 Users Allowed",
+      sendUpTo: "Send up to 10 GB",
+    },
+  },
+  {
+    header: "Master",
+    price: 39.99,
+    description: {
+      storage: "2 TB Storage",
+      user: "5 Users Allowed",
+      sendUpTo: "Send up to 20 GB",
+    },
+  },
+]);
+</script>
 
 <template>
-  <main>
+  <main class="py-6">
     <div class="container has-text-centered">
       <h1 class="title">Our Pricing</h1>
       <div
-        class="toggle-container is-flex is-align-content-center is-align-items-center"
+        class="toggle-container m-6 is-flex is-align-content-center is-align-items-center"
       >
         <span>Annualy</span>
-        <input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+
+        <input type="checkbox" id="switch" />
+        <label for="switch">Toggle</label>
         <span>Monthly</span>
       </div>
-      <div class="box">
-        <h2>Basic</h2>
-        <h3 class="is-size-1"><span>&dollar; 199.99</span></h3>
+      <div v-for="price in pricing" class="box pricing-card">
+        <h2>{{ price.header }}</h2>
+        <h3 class="is-size-1">
+          <span class="is-size-2">&dollar;</span> {{ price.price }}
+        </h3>
+
         <hr />
-        <p>500 GB Storage</p>
-        <hr />
-        <p>2 Users Allowed</p>
-        <hr />
-        <p>Send up to 3 GB</p>
-        <hr />
-        <a
-          class="button is-medium is-fullwidth is-uppercase has-text-weight-bold has-text-white is-size-7"
+        <ul v-for="items in price.description" class="description">
+          <li>{{ items }}</li>
+          <hr />
+        </ul>
+        <div
+          class="pointer px-2 is-normal is-fullwidth is-uppercase has-text-weight-bold is-size-7"
         >
-          learn more
-        </a>
+          <a class="button is-fullwidth has-text-white"> learn more </a>
+        </div>
       </div>
     </div>
   </main>
@@ -84,5 +119,9 @@ label:active:after {
 .button {
   letter-spacing: 0.1rem;
   font-family: "Montserrat", sans-serif;
+}
+
+.pricing-card {
+  max-width: 20rem;
 }
 </style>
